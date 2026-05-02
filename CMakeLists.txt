@@ -4,4 +4,6 @@ project(code)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(code main.cpp
-        Item.h)
+        Item.h
+        Gladiator.h
+        Gladiator.cpp)
