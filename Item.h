@@ -16,7 +16,7 @@ public:
     virtual std::string GetStats() = 0;
 
     std::string GetName() { return name; }
-    int GetPrice() const { return price; }
+    [[nodiscard]] int GetPrice() const { return price; }
 };
 
 class Weapon : public Item {
@@ -27,7 +27,7 @@ public:
         return name + " [Оружие] (Урон: +" + std::to_string(damageWeapon) + ") Цена: " + std::to_string(price);
     }
 
-    int GetDamage() const { return damageWeapon; }
+    [[nodiscard]] int GetDamage() const { return damageWeapon; }
 };
 
 class Armor : public Item {
@@ -38,7 +38,7 @@ public:
         return name + " [Броня] (Макс. ХП: +" + std::to_string(hpBonus) + ") Цена: " + std::to_string(price);
     }
 
-    int GetHpBonus() const { return hpBonus; }
+    [[nodiscard]] int GetHpBonus() const { return hpBonus; }
 };
 
 class Potion : public Item {
@@ -49,7 +49,7 @@ public:
         return name + " [Зелье] (Лечение: +" + std::to_string(healAmount) + ") Цена: " + std::to_string(price);
     }
 
-    int GetHealAmount() const { return healAmount; }
+    [[nodiscard]] int GetHealAmount() const { return healAmount; }
 };
 
 #endif //CODE_ITEM_H

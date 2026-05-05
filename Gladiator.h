@@ -4,6 +4,8 @@
 
 #ifndef CODE_GLADIATOR_H
 #define CODE_GLADIATOR_H
+#include <memory>
+
 #include "Item.h"
 #include <string>
 
@@ -13,8 +15,8 @@ class Gladiator
     int baseHP;
     int hp;
     int baseDamage;
-    Weapon* equipwepon;
-    Armor* equiparmon;
+    std::unique_ptr<Weapon> equipwepon;
+    std::unique_ptr<Armor> equiparmon;
     bool hasTrainedToday;
     bool hasFoughtToday;
     bool isVulnerable;
@@ -29,25 +31,32 @@ class Gladiator
         isBlocking = false;
     }
     std::string GetName() { return name; }
-    int GetHp() const { return hp; }
+    [[nodiscard]] int GetHp() const { return hp; }
 
-    int GetMaxHp () const
+    [[nodiscard]] int GetMaxHp () const
     {
         int armorBonus = (equiparmon != nullptr) ? equiparmon->GetHpBonus() : 0;
         return baseHP + armorBonus;
     }
-    int GetTotalDamage() const
+    [[nodiscard]] int GetTotalDamage() const
     {
         int damage = (equipwepon != nullptr) ? equipwepon->GetDamage() : 0;
         return baseDamage + damage;
     }
-    void EquipWeapon(Weapon* weapon) {equipwepon = weapon;}
-    void EquipArmor(Armor* armor) {equiparmon = armor;}
+    void EquipWeapon(std::unique_ptr<Weapon> weapon) {equipwepon = std::move(weapon);}
+    void EquipArmor(std::unique_ptr<Armor> armor) {
+        equiparmon = std::move(armor);
+        if (hp > GetMaxHp()) {
+            hp = GetMaxHp();
+        }
+    }
     void Heal(int amount);
     void TakeDamage(int damage);
     void SetVulnerable(bool val) { isVulnerable = val;}
-    void SetBlocking(bool val)
-    { isBlocking = val;}
+    void SetBlocking(bool val) { isBlocking = val;}
+    [[nodiscard]] bool HasTrainedToday() const { return hasTrainedToday; }
+    void SetTrainedToday(bool val) { hasTrainedToday = val; }
+    void AddBaseDamage(int amount) { baseDamage += amount; }
 };
 
 #endif //CODE_GLADIATOR_H
