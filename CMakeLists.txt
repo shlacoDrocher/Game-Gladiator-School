@@ -10,4 +10,8 @@ add_executable(code main.cpp
         Ludus.cpp
         Ludus.h
         ItemFactory.cpp
-        ItemFactory.h)
+        ItemFactory.h
+        Market.cpp
+        Market.h
+        GladiatorFactory.cpp
+        GladiatorFactory.h)

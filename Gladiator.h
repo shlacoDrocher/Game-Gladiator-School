@@ -15,6 +15,7 @@ class Gladiator
     int baseHP;
     int hp;
     int baseDamage;
+    int price;
     std::unique_ptr<Weapon> equipwepon;
     std::unique_ptr<Armor> equiparmon;
     bool hasTrainedToday;
@@ -22,7 +23,7 @@ class Gladiator
     bool isVulnerable;
     bool isBlocking;
     public:
-    Gladiator(std::string name, int hp, int damage) : name(std::move(name)), baseHP(hp), hp(hp), baseDamage(damage){
+    Gladiator(std::string name, int hp, int damage, int price) : name(std::move(name)), baseHP(hp), hp(hp), baseDamage(damage), price(price){
         equiparmon = nullptr;
         equipwepon = nullptr;
         hasTrainedToday = false;
@@ -31,6 +32,7 @@ class Gladiator
         isBlocking = false;
     }
     std::string GetName() { return name; }
+    [[nodiscard]] int GetPrice() const { return price; }
     [[nodiscard]] int GetHp() const { return hp; }
 
     [[nodiscard]] int GetMaxHp () const
