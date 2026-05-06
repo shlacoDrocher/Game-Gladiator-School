@@ -8,4 +8,6 @@ add_executable(code main.cpp
         Gladiator.h
         Gladiator.cpp
         Ludus.cpp
-        Ludus.h)
+        Ludus.h
+        ItemFactory.cpp
+        ItemFactory.h)
