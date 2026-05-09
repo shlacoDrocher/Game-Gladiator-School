@@ -14,7 +14,7 @@ void Market::UpdateAssortment() {
         dailyItems.push_back(ItemFactory::CreateRandomItem());
     }
     for (int i = 0; i < 2; i++) {
-        dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator());
+        dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator(1));
     }
 }
 

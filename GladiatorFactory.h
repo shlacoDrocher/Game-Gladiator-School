@@ -11,7 +11,7 @@
 
 class GladiatorFactory {
     public:
-    static std::unique_ptr<Gladiator> CreateRandomGladiator();
+    static std::unique_ptr<Gladiator> CreateRandomGladiator(int level);
 };
 
 

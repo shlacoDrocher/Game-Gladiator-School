@@ -14,4 +14,8 @@ add_executable(code main.cpp
         Market.cpp
         Market.h
         GladiatorFactory.cpp
-        GladiatorFactory.h)
+        GladiatorFactory.h
+        CombatStrategies.cpp
+        CombatStrategies.h
+        Arena.cpp
+        Arena.h)
