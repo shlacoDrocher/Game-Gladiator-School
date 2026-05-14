@@ -2,7 +2,7 @@
 // Created by Sigma on 06.05.2026.
 //
 
-#include "GladiatorFactory.h"
+#include "../Factories/GladiatorFactory.h"
 
 #include <vector>
 

@@ -4,8 +4,8 @@
 
 #ifndef CODE_MARKET_H
 #define CODE_MARKET_H
-#include "ItemFactory.h"
-#include "GladiatorFactory.h"
+#include "../Factories/ItemFactory.h"
+#include "../Factories/GladiatorFactory.h"
 #include "Ludus.h"
 
 class Market {

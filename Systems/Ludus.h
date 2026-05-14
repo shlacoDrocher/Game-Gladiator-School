@@ -6,7 +6,7 @@
 #define CODE_LUDUS_H
 #include <memory>
 #include "Inventory.h"
-#include "Gladiator.h"
+#include "../Entities/Gladiator.h"
 #include <vector>
 
 

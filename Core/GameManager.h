@@ -4,9 +4,9 @@
 
 #ifndef CODE_GAMEMANAGER_H
 #define CODE_GAMEMANAGER_H
-#include "Ludus.h"
-#include "Market.h"
-#include "Arena.h"
+#include "../Systems/Ludus.h"
+#include "../Systems/Market.h"
+#include "../Combat/Arena.h"
 
 class GameManager {
     Ludus school;

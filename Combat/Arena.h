@@ -5,7 +5,7 @@
 #ifndef CODE_ARENA_H
 #define CODE_ARENA_H
 #include "CombatStrategies.h"
-#include "Gladiator.h"
+#include "../Entities/Gladiator.h"
 
 
 class Arena {

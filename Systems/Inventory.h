@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-#include "Item.h"
+#include "../Entities/Item.h"
 
 class Inventory {
     std::vector<std::unique_ptr<Item>> items;

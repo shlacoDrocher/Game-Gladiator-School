@@ -6,7 +6,7 @@
 #define CODE_GLADIATORFACTORY_H
 #include <memory>
 
-#include "Gladiator.h"
+#include "../Entities/Gladiator.h"
 
 
 class GladiatorFactory {

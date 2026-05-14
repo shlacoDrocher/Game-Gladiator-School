@@ -4,7 +4,7 @@
 
 #ifndef CODE_COMBATSTRATEGIES_H
 #define CODE_COMBATSTRATEGIES_H
-#include "Gladiator.h"
+#include "../Entities/Gladiator.h"
 
 class ICombatStrategy {
 public:

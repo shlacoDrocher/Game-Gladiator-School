@@ -3,7 +3,7 @@
 //
 
 #include "Arena.h"
-#include "GladiatorFactory.h"
+#include "../Factories/GladiatorFactory.h"
 #include <iostream>
 
 // ДОБАВИЛИ Arena::

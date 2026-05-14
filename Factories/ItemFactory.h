@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 #include <cstdlib>
-#include "Item.h"
+#include "../Entities/Item.h"
 
 
 class ItemFactory {
