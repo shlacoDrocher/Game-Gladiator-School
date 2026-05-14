@@ -47,11 +47,14 @@ class Gladiator
     }
     void EquipWeapon(std::unique_ptr<Weapon> weapon) {equipwepon = std::move(weapon);}
     void EquipArmor(std::unique_ptr<Armor> armor) {
+        int bonus = armor->GetHpBonus();
         equiparmon = std::move(armor);
+        hp += bonus;
         if (hp > GetMaxHp()) {
             hp = GetMaxHp();
         }
     }
+
     void Heal(int amount);
     void TakeDamage(int damage);
     void SetVulnerable(bool val) { isVulnerable = val;}
