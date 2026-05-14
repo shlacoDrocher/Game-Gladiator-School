@@ -30,7 +30,13 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
             activeStrategy->Execute(playerGladiator, enemy.get());
 
             if (enemy->GetHp() <= 0) {
-                std::cout << "Враг повержен!" << std::endl;
+                std::cout << "\nВраг повержен!" << std::endl;
+
+                if (wave < 2) {
+                    int waveHeal = playerGladiator->GetMaxHp() / 2;
+                    playerGladiator->Heal(waveHeal);
+                    std::cout << "[ПЕРЕРЫВ] Ваш боец отдыхает и восстанавливает " << waveHeal << " ХП перед следующим боем!" << std::endl;
+                }
                 break;
             }
 
