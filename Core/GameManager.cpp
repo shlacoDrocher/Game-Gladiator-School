@@ -4,6 +4,7 @@
 
 #include "GameManager.h"
 #include <iostream>
+#include <cstdlib>
 
 GameManager::GameManager() {
     currentDay = 1;
@@ -27,6 +28,7 @@ void GameManager::ShowMainMenu() {
     std::cout << "2. Рынок (Магазин и Рабы)" << std::endl;
     std::cout << "3. Арена (Бои)" << std::endl;
     std::cout << "4. Закончить день" << std::endl;
+    std::cout << "0. Выйти из игры" << std::endl;
     std::cout << "Выберите действие: ";
 
     int choice; std::cin >> choice;
@@ -35,6 +37,7 @@ void GameManager::ShowMainMenu() {
     else if (choice == 2) HandleMarketMenu();
     else if (choice == 3) HandleArenaMenu();
     else if (choice == 4) EndDay();
+    else if (choice == 0) ExitGame();
     else std::cout << "Неверный выбор." << std::endl;
 }
 
@@ -162,4 +165,9 @@ void GameManager::EndDay() {
     hasFoughtToday = false;
     school.NightHeal();
     market.UpdateAssortment();
+}
+
+void GameManager::ExitGame() {
+    std::cout << "Вы покинули игру. До встречи на Арене!" << std::endl;
+    std::exit(0);
 }

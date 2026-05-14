@@ -22,6 +22,7 @@ class GameManager {
     void HandleSchoolMenu();
     void RandomEvent();
     void EndDay();
+    static void ExitGame();
     public:
     GameManager();
     void StartGame();
