@@ -50,12 +50,12 @@ void GameManager::HandleMarketMenu() {
     std::cin >> marketChoice;
 
     if (marketChoice == 1) {
-        std::cout << "Введите номер предмета (1-3) или 0 для отмены: ";
+        std::cout << "Введите номер предмета или 0 для отмены: ";
         int itemIndex; std::cin >> itemIndex;
         if (itemIndex > 0) market.BuyItem(itemIndex - 1, school);
     }
     else if (marketChoice == 2) {
-        std::cout << "Введите номер раба (1-2) или 0 для отмены: ";
+        std::cout << "Введите номер раба или 0 для отмены: ";
         int slaveIndex; std::cin >> slaveIndex;
         if (slaveIndex > 0) market.BuyGladiator(slaveIndex - 1, school);
     }
