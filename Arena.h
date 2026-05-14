@@ -14,6 +14,7 @@ class Arena {
     DefensiveStance strategyDefensive;
 public:
     bool StartTournament(Gladiator* playerGladiator, int currentDay);
+    bool FightBoss(Gladiator* playerGladiator, Gladiator* boss);
 };
 
 

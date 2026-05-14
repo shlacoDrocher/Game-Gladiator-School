@@ -28,6 +28,6 @@ void RecklessAttack::Execute(Gladiator* attacker, Gladiator* defender) {
 void DefensiveStance::Execute(Gladiator* attacker, Gladiator* defender) {
     std::cout << "Боец " << attacker->GetName() << " уходит в глухую защиту и переводит дыхание." << std::endl;
     attacker->SetBlocking(true);
-    int healAmount = attacker->GetMaxHp() * 0.1;
+    int healAmount = static_cast<int>(attacker->GetMaxHp() * 0.05f);
     attacker->Heal(healAmount);
 }

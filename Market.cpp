@@ -19,12 +19,12 @@ void Market::UpdateAssortment() {
 }
 
 void Market::ShowAssortment() const {
-    std::cout << "\n=== ТОВАРЫ НА РЫНКЕ ===" << std::endl;
+    std::cout << "\n ТОВАРЫ НА РЫНКЕ " << std::endl;
     for (size_t i = 0; i < dailyItems.size(); i++) {
         std::cout << "[Предмет " << i + 1 << "] " << dailyItems[i]->GetStats() << std::endl;
     }
 
-    std::cout << "\n=== РАБЫ НА ПРОДАЖУ ===" << std::endl;
+    std::cout << "\n РАБЫ НА ПРОДАЖУ " << std::endl;
     for (size_t i = 0; i < dailyGladiators.size(); i++) {
         std::cout << "[Раб " << i + 1 << "] "
                   << dailyGladiators[i]->GetName()
