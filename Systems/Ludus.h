@@ -11,7 +11,7 @@
 
 
 class Ludus {
-    int gold = 150;
+    int gold = 250;
     int reputation = 0;
     int dummyLevel = 1;
     int infirmaryLevel = 1;
