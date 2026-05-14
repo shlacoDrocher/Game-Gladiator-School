@@ -18,4 +18,10 @@ add_executable(code main.cpp
         CombatStrategies.cpp
         CombatStrategies.h
         Arena.cpp
-        Arena.h)
+        Arena.h
+        GameManager.cpp
+        GameManager.h
+        Inventory.cpp
+        Inventory.h
+        Inventory.cpp
+        Inventory.h)

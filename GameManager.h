@@ -17,7 +17,10 @@ class GameManager {
     bool hasFoughtToday;
 
     void ShowMainMenu();
+    void HandleMarketMenu();
+    void HandleArenaMenu();
     void HandleSchoolMenu();
+    void RandomEvent();
     void EndDay();
     public:
     GameManager();

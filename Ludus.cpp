@@ -17,7 +17,7 @@ bool Ludus::AddGladiator(std::unique_ptr<Gladiator> g) {
 void Ludus::ShowRoster() const {
     for (int i = 0; i < gladiators.size(); i++) {
         std::cout << i + 1 << ". " << gladiators[i]->GetName()
-                  << " HP: " << gladiators[i]->GetMaxHp()
+                  << " HP: " << gladiators[i]->GetHp() << "/" << gladiators[i]->GetMaxHp()
                   << " DMG: " << gladiators[i]->GetTotalDamage() << std::endl;
     }
 }
@@ -75,26 +75,24 @@ void Ludus::RemoveDeadGladiators() {
 }
 
 void Ludus::EquipItemMenu() {
-    if (inventory.empty()) {
+    if (inventory.IsEmpty()) {
         std::cout << "Ваш склад пуст!" << std::endl;
         return;
     }
 
     std::cout << "\n ВАШ СКЛАД " << std::endl;
-    for (size_t i = 0; i < inventory.size(); i++) {
-        std::cout << i + 1 << ". " << inventory[i]->GetStats() << std::endl;
-    }
+    inventory.ShowItems();
 
     std::cout << "Выберите предмет для использования (0 - отмена): ";
     int itemIdx; std::cin >> itemIdx;
-    if (itemIdx <= 0 || itemIdx > inventory.size()) return;
+    if (itemIdx <= 0 || itemIdx > inventory.GetSize()) return;
 
     std::cout << "Выберите бойца (от 1 до " << gladiators.size() << "): ";
     int gladIdx; std::cin >> gladIdx;
     if (gladIdx <= 0 || gladIdx > gladiators.size()) return;
 
     Gladiator* g = gladiators[gladIdx - 1].get();
-    auto& item = inventory[itemIdx - 1];
+    std::unique_ptr<Item> item = inventory.TakeItem(itemIdx - 1);
 
     if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
         g->EquipWeapon(std::unique_ptr<Weapon>(static_cast<Weapon*>(item.release())));
@@ -108,6 +106,4 @@ void Ludus::EquipItemMenu() {
         g->Heal(potion->GetHealAmount());
         std::cout << "Боец выпил зелье и восстановил здоровье!" << std::endl;
     }
-
-    inventory.erase(inventory.begin() + (itemIdx - 1));
 }
