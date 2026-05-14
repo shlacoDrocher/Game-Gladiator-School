@@ -30,5 +30,18 @@ class Ludus {
     void UpgradeInfirmary();
     void NightHeal();
     void AddGold(int amount) { gold += amount; }
+    int GetGladiatorCount() const { return static_cast<int>(gladiators.size()); }
+
+    // Добавить репутацию за победу
+    void AddReputation(int amount) { reputation += amount; }
+
+    Gladiator* GetGladiator(int index) {
+        if (index >= 0 && index < gladiators.size()) {
+            return gladiators[index].get();
+        }
+        return nullptr;
+    }
+    void RemoveDeadGladiators();
+    void EquipItemMenu();
 };
 #endif //CODE_LUDUS_H

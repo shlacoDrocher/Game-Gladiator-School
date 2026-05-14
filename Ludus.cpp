@@ -64,3 +64,50 @@ void Ludus::TrainGladiator(int index) {
         std::cout << "Неверный номер гладиатора!" << std::endl;
     }
 }
+
+void Ludus::RemoveDeadGladiators() {
+    for (int i = static_cast<int>(gladiators.size()) - 1; i >= 0; i--) {
+        if (gladiators[i]->GetHp() <= 0) {
+            std::cout << "Гладиатор " << gladiators[i]->GetName() << " мертв и вычеркнут из списков школы..." << std::endl;
+            gladiators.erase(gladiators.begin() + i);
+        }
+    }
+}
+
+void Ludus::EquipItemMenu() {
+    if (inventory.empty()) {
+        std::cout << "Ваш склад пуст!" << std::endl;
+        return;
+    }
+
+    std::cout << "\n ВАШ СКЛАД " << std::endl;
+    for (size_t i = 0; i < inventory.size(); i++) {
+        std::cout << i + 1 << ". " << inventory[i]->GetStats() << std::endl;
+    }
+
+    std::cout << "Выберите предмет для использования (0 - отмена): ";
+    int itemIdx; std::cin >> itemIdx;
+    if (itemIdx <= 0 || itemIdx > inventory.size()) return;
+
+    std::cout << "Выберите бойца (от 1 до " << gladiators.size() << "): ";
+    int gladIdx; std::cin >> gladIdx;
+    if (gladIdx <= 0 || gladIdx > gladiators.size()) return;
+
+    Gladiator* g = gladiators[gladIdx - 1].get();
+    auto& item = inventory[itemIdx - 1];
+
+    if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
+        g->EquipWeapon(std::unique_ptr<Weapon>(static_cast<Weapon*>(item.release())));
+        std::cout << "Оружие экипировано!" << std::endl;
+    }
+    else if (auto armor = dynamic_cast<Armor*>(item.get())) {
+        g->EquipArmor(std::unique_ptr<Armor>(static_cast<Armor*>(item.release())));
+        std::cout << "Броня надета!" << std::endl;
+    }
+    else if (auto potion = dynamic_cast<Potion*>(item.get())) {
+        g->Heal(potion->GetHealAmount());
+        std::cout << "Боец выпил зелье и восстановил здоровье!" << std::endl;
+    }
+
+    inventory.erase(inventory.begin() + (itemIdx - 1));
+}
