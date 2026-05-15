@@ -9,7 +9,19 @@
 GameManager::GameManager() {
     currentDay = 1;
     hasFoughtToday = false;
-    market.UpdateAssortment();
+    market.UpdateAssortment(1);
+}
+
+int GameManager::GetValidInput(int min, int max) {
+    int choice;
+    std::cin >> choice;
+    while (std::cin.fail() || choice < min || choice > max) {
+        std::cin.clear();
+        std::cin.ignore(32767, '\n');
+        std::cout << "Ошибка! Введите число от " << min << " до " << max << ": ";
+        std::cin >> choice;
+    }
+    return choice;
 }
 
 void GameManager::StartGame() {
@@ -31,7 +43,7 @@ void GameManager::ShowMainMenu() {
     std::cout << "0. Выйти из игры" << std::endl;
     std::cout << "Выберите действие: ";
 
-    int choice; std::cin >> choice;
+    int choice = GetValidInput(0, 4);
 
     if (choice == 1) HandleSchoolMenu();
     else if (choice == 2) HandleMarketMenu();
@@ -46,17 +58,16 @@ void GameManager::HandleMarketMenu() {
     market.ShowAssortment();
 
     std::cout << "\nЧто хотите купить?\n1. Предмет\n2. Раба\n0. Назад\nВыбор: ";
-    int marketChoice;
-    std::cin >> marketChoice;
+    int marketChoice = GetValidInput(0, 2);
 
     if (marketChoice == 1) {
         std::cout << "Введите номер предмета или 0 для отмены: ";
-        int itemIndex; std::cin >> itemIndex;
+        int itemIndex = GetValidInput(0, 3);
         if (itemIndex > 0) market.BuyItem(itemIndex - 1, school);
     }
     else if (marketChoice == 2) {
         std::cout << "Введите номер раба или 0 для отмены: ";
-        int slaveIndex; std::cin >> slaveIndex;
+        int slaveIndex = GetValidInput(0, 3);
         if (slaveIndex > 0) market.BuyGladiator(slaveIndex - 1, school);
     }
 }
@@ -70,7 +81,7 @@ void GameManager::HandleArenaMenu() {
     std::cout << "\n ВЫБОР БОЙЦА ДЛЯ АРЕНЫ ---" << std::endl;
     school.ShowRoster();
     std::cout << "Введите номер бойца (или 0 для отмены): ";
-    int fighterIndex; std::cin >> fighterIndex;
+    int fighterIndex = GetValidInput(0, school.GetGladiatorCount());
 
     if (fighterIndex == 0) return;
 
@@ -125,10 +136,10 @@ void GameManager::HandleSchoolMenu() {
     std::cout << "0. Назад в Главное Меню" << std::endl;
     std::cout << "Выбор: ";
 
-    int schoolChoice; std::cin >> schoolChoice;
+    int schoolChoice = GetValidInput(0, 4);
     if (schoolChoice == 1) {
         std::cout << "Введите номер бойца для тренировки: ";
-        int trainIndex; std::cin >> trainIndex;
+        int trainIndex = GetValidInput(0, school.GetGladiatorCount());
         school.TrainGladiator(trainIndex - 1);
     } else if (schoolChoice == 2) {
         school.UpgradeDummy();
@@ -164,7 +175,7 @@ void GameManager::EndDay() {
 
     hasFoughtToday = false;
     school.NightHeal();
-    market.UpdateAssortment();
+    market.UpdateAssortment(currentDay);
 }
 
 void GameManager::ExitGame() {

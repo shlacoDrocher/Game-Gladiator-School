@@ -22,7 +22,7 @@ void Ludus::ShowRoster() const {
     }
 }
 
-void Ludus::NightHeal() {
+void Ludus::NightHeal() const {
     for (auto & gladiator : gladiators) {
         gladiator -> Heal(infirmaryLevel *10);
     }
@@ -50,7 +50,7 @@ void Ludus::UpgradeInfirmary() {
     }
 }
 
-void Ludus::TrainGladiator(int index) {
+void Ludus::TrainGladiator(int index) const {
     if (index >=0 && index < gladiators.size()) {
         auto& g = gladiators[index];
         if (g -> HasTrainedToday() == false) {
@@ -85,24 +85,31 @@ void Ludus::EquipItemMenu() {
 
     std::cout << "Выберите предмет для использования (0 - отмена): ";
     int itemIdx; std::cin >> itemIdx;
-    if (itemIdx <= 0 || itemIdx > inventory.GetSize()) return;
+    if (std::cin.fail() || itemIdx <= 0 || itemIdx > inventory.GetSize()) {
+        std::cin.clear(); std::cin.ignore(32767, '\n');
+        return;
+    }
 
     std::cout << "Выберите бойца (от 1 до " << gladiators.size() << "): ";
     int gladIdx; std::cin >> gladIdx;
-    if (gladIdx <= 0 || gladIdx > gladiators.size()) return;
+    if (std::cin.fail() || gladIdx <= 0 || gladIdx > gladiators.size()) {
+        std::cin.clear(); std::cin.ignore(32767, '\n');
+        return;
+    }
 
     Gladiator* g = gladiators[gladIdx - 1].get();
     std::unique_ptr<Item> item = inventory.TakeItem(itemIdx - 1);
 
-    if (auto weapon = dynamic_cast<Weapon*>(item.get())) {
-        g->EquipWeapon(std::unique_ptr<Weapon>(static_cast<Weapon*>(item.release())));
+    if (dynamic_cast<Weapon*>(item.get()) != nullptr) {
+        g->EquipWeapon(std::unique_ptr<Weapon>(dynamic_cast<Weapon*>(item.release())));
         std::cout << "Оружие экипировано!" << std::endl;
     }
-    else if (auto armor = dynamic_cast<Armor*>(item.get())) {
-        g->EquipArmor(std::unique_ptr<Armor>(static_cast<Armor*>(item.release())));
+    else if (dynamic_cast<Armor*>(item.get()) != nullptr) {
+        g->EquipArmor(std::unique_ptr<Armor>(dynamic_cast<Armor*>(item.release())));
         std::cout << "Броня надета!" << std::endl;
     }
-    else if (auto potion = dynamic_cast<Potion*>(item.get())) {
+    else if (dynamic_cast<Potion*>(item.get()) != nullptr) {
+        auto potion = dynamic_cast<Potion*>(item.get());
         g->Heal(potion->GetHealAmount());
         std::cout << "Боец выпил зелье и восстановил здоровье!" << std::endl;
     }

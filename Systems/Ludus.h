@@ -25,17 +25,16 @@ class Ludus {
     void AddItemInventory(std::unique_ptr<Item> item) { inventory.AddItem(std::move(item)); }
     bool AddGladiator(std::unique_ptr<Gladiator> g);
     void ShowRoster() const;
-    void TrainGladiator(int index);
+    void TrainGladiator(int index) const;
     void UpgradeDummy();
     void UpgradeInfirmary();
-    void NightHeal();
+    void NightHeal() const;
     void AddGold(int amount) { gold += amount; }
-    int GetGladiatorCount() const { return static_cast<int>(gladiators.size()); }
+    [[nodiscard]] int GetGladiatorCount() const { return static_cast<int>(gladiators.size()); }
 
-    // Добавить репутацию за победу
     void AddReputation(int amount) { reputation += amount; }
 
-    Gladiator* GetGladiator(int index) {
+    [[nodiscard]] Gladiator* GetGladiator(int index) const {
         if (index >= 0 && index < gladiators.size()) {
             return gladiators[index].get();
         }
