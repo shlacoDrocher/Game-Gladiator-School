@@ -21,6 +21,12 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
 
             int choice;
             std::cin >> choice;
+            while (std::cin.fail() || choice < 1 || choice > 3) {
+                std::cin.clear(); // Очищаем флаг ошибки
+                std::cin.ignore(32767, '\n'); // Выбрасываем застрявшие буквы из буфера
+                std::cout << "Ошибка! Введите число 1, 2 или 3: ";
+                std::cin >> choice;
+            }
 
             ICombatStrategy* activeStrategy = nullptr;
             if (choice == 1) activeStrategy = &strategyAccurate;

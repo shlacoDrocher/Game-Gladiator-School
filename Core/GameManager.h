@@ -23,6 +23,7 @@ class GameManager {
     void RandomEvent();
     void EndDay();
     static void ExitGame();
+    static int GetValidInput(int min, int max);
     public:
     GameManager();
     void StartGame();

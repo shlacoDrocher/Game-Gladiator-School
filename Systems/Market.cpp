@@ -3,18 +3,19 @@
 //
 
 #include "Market.h"
-
+#include "../Factories/ItemFactory.h"
+#include "../Factories/GladiatorFactory.h"
 
 #include <iostream>
 
-void Market::UpdateAssortment() {
+void Market::UpdateAssortment(int currentDay) {
     dailyItems.clear();
     dailyGladiators.clear();
     for (int index = 0; index < 3; index++) {
         dailyItems.push_back(ItemFactory::CreateRandomItem());
     }
     for (int i = 0; i < 2; i++) {
-        dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator(1));
+        dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator(currentDay));
     }
 }
 
