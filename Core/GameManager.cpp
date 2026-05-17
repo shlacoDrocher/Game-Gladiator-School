@@ -96,7 +96,7 @@ void GameManager::HandleArenaMenu() {
         std::cout << "Ваш противник - Чемпион Рима!" << std::endl;
 
         auto boss = std::make_unique<Gladiator>("ЧЕМПИОН РИМА", 300, 35, 0);
-        isVictorious = arena.FightBoss(fighter, boss.get());
+        isVictorious = Arena::FightBoss(fighter, boss.get());
 
         if (isVictorious) {
             std::cout << "\nПОБЕДА! ВЫ ПРОШЛИ ИГРУ! ВАША ШКОЛА ВЕЛИЧАЙШАЯ В РИМЕ!" << std::endl;
@@ -104,7 +104,7 @@ void GameManager::HandleArenaMenu() {
         }
     }
     else {
-        isVictorious = arena.StartTournament(fighter, currentDay);
+        isVictorious = Arena::StartTournament(fighter, currentDay);
     }
 
     if (isVictorious) {

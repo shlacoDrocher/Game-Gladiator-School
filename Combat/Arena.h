@@ -7,8 +7,8 @@
 
 class Arena {
 public:
-    bool StartTournament(Gladiator* playerGladiator, int currentDay);
-    bool FightBoss(Gladiator* playerGladiator, Gladiator* boss);
+    static bool StartTournament(Gladiator* playerGladiator, int currentDay);
+    static bool FightBoss(Gladiator* playerGladiator, Gladiator* boss);
 };
 
 
