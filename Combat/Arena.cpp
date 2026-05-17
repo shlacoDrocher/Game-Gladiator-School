@@ -17,10 +17,10 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
 
             int choice = GameManager::GetValidInput(1,3);
 
-            ICombatStrategy* activeStrategy = nullptr;
-            if (choice == 1) activeStrategy = &strategyAccurate;
-            else if (choice == 2) activeStrategy = &strategyReckless;
-            else activeStrategy = &strategyDefensive;
+            std::unique_ptr<ICombatStrategy> activeStrategy;
+            if (choice == 1) activeStrategy = std::make_unique<AccurateAttack>();
+            else if (choice == 2) activeStrategy = std::make_unique<RecklessAttack>();
+            else activeStrategy = std::make_unique<DefensiveStance>();
 
             activeStrategy->Execute(playerGladiator, enemy.get());
 
@@ -44,12 +44,13 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
             else if (aiRoll < 80) enemyChoice = 2;
             else enemyChoice = 3;
 
-            if (enemyChoice == 1) activeStrategy = &strategyAccurate;
-            else if (enemyChoice == 2) activeStrategy = &strategyReckless;
-            else activeStrategy = &strategyDefensive;
+            std::unique_ptr<ICombatStrategy> enemyStrategy;
+            if (enemyChoice == 1) enemyStrategy = std::make_unique<AccurateAttack>();
+            else if (enemyChoice == 2) enemyStrategy = std::make_unique<RecklessAttack>();
+            else enemyStrategy = std::make_unique<DefensiveStance>();
 
             std::cout << "\n Ход противника " << std::endl;
-            activeStrategy->Execute(enemy.get(), playerGladiator);
+            enemyStrategy->Execute(enemy.get(), playerGladiator);
         }
 
         if (playerGladiator->GetHp() <= 0) {
@@ -73,10 +74,10 @@ bool Arena::FightBoss(Gladiator *playerGladiator, Gladiator* boss) {
 
             int choice = GameManager::GetValidInput(1,3);
 
-            ICombatStrategy* activeStrategy = nullptr;
-            if (choice == 1) activeStrategy = &strategyAccurate;
-            else if (choice == 2) activeStrategy = &strategyReckless;
-            else activeStrategy = &strategyDefensive;
+            std::unique_ptr<ICombatStrategy> activeStrategy;
+            if (choice == 1) activeStrategy = std::make_unique<AccurateAttack>();
+            else if (choice == 2) activeStrategy = std::make_unique<RecklessAttack>();
+            else activeStrategy = std::make_unique<DefensiveStance>();
 
             activeStrategy->Execute(playerGladiator, boss);
 
@@ -94,12 +95,13 @@ bool Arena::FightBoss(Gladiator *playerGladiator, Gladiator* boss) {
             else if (aiRoll < 80) enemyChoice = 2;
             else enemyChoice = 3;
 
-            if (enemyChoice == 1) activeStrategy = &strategyAccurate;
-            else if (enemyChoice == 2) activeStrategy = &strategyReckless;
-            else activeStrategy = &strategyDefensive;
+            std::unique_ptr<ICombatStrategy> enemyStrategy;
+            if (enemyChoice == 1) enemyStrategy = std::make_unique<AccurateAttack>();
+            else if (enemyChoice == 2) enemyStrategy = std::make_unique<RecklessAttack>();
+            else enemyStrategy = std::make_unique<DefensiveStance>();
 
             std::cout << "\n Ход противника " << std::endl;
-            activeStrategy->Execute(boss, playerGladiator);
+            enemyStrategy->Execute(boss, playerGladiator);
         }
 
         if (playerGladiator->GetHp() <= 0) {
