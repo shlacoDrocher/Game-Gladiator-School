@@ -1,5 +1,6 @@
 #include "Arena.h"
 #include "../Factories/GladiatorFactory.h"
+#include "../Core/GameManager.h"
 #include <iostream>
 
 bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
@@ -14,14 +15,7 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
             std::cout << "\n[ВЫ] ХП: " << playerGladiator->GetHp() << " |[ВРАГ] ХП: " << enemy->GetHp() << std::endl;
             std::cout << "Выберите действие:\n1. Точная атака\n2. Безрассудный удар\n3. Глухая защита" << std::endl;
 
-            int choice;
-            std::cin >> choice;
-            while (std::cin.fail() || choice < 1 || choice > 3) {
-                std::cin.clear(); // Очищаем флаг ошибки
-                std::cin.ignore(32767, '\n'); // Выбрасываем застрявшие буквы из буфера
-                std::cout << "Ошибка! Введите число 1, 2 или 3: ";
-                std::cin >> choice;
-            }
+            int choice = GameManager::GetValidInput(1,3);
 
             ICombatStrategy* activeStrategy = nullptr;
             if (choice == 1) activeStrategy = &strategyAccurate;
@@ -77,8 +71,7 @@ bool Arena::FightBoss(Gladiator *playerGladiator, Gladiator* boss) {
             std::cout << "\n[ВЫ] ХП: " << playerGladiator->GetHp() << " |[ВРАГ] ХП: " << boss->GetHp() << std::endl;
             std::cout << "Выберите действие:\n1. Точная атака\n2. Безрассудный удар\n3. Глухая защита" << std::endl;
 
-            int choice;
-            std::cin >> choice;
+            int choice = GameManager::GetValidInput(1,3);
 
             ICombatStrategy* activeStrategy = nullptr;
             if (choice == 1) activeStrategy = &strategyAccurate;

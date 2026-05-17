@@ -1,6 +1,6 @@
 
 #include "Ludus.h"
-
+#include "../Core/GameManager.h"
 #include <iostream>
 
 bool Ludus::AddGladiator(std::unique_ptr<Gladiator> g) {
@@ -81,18 +81,10 @@ void Ludus::EquipItemMenu() {
     inventory.ShowItems();
 
     std::cout << "Выберите предмет для использования (0 - отмена): ";
-    int itemIdx; std::cin >> itemIdx;
-    if (std::cin.fail() || itemIdx <= 0 || itemIdx > inventory.GetSize()) {
-        std::cin.clear(); std::cin.ignore(32767, '\n');
-        return;
-    }
+    int itemIdx = GameManager::GetValidInput(0,static_cast<int>(inventory.GetSize()));
 
     std::cout << "Выберите бойца (от 1 до " << gladiators.size() << "): ";
-    int gladIdx; std::cin >> gladIdx;
-    if (std::cin.fail() || gladIdx <= 0 || gladIdx > gladiators.size()) {
-        std::cin.clear(); std::cin.ignore(32767, '\n');
-        return;
-    }
+    int gladIdx = GameManager::GetValidInput(1,static_cast<int>(gladiators.size()));
 
     Gladiator* g = gladiators[gladIdx - 1].get();
     std::unique_ptr<Item> item = inventory.TakeItem(itemIdx - 1);
