@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 09.05.2026.
-//
 
 #include "CombatStrategies.h"
 #include <cstdlib>

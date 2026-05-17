@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 05.05.2026.
-//
 
 #include "Ludus.h"
 

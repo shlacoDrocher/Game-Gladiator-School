@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 09.05.2026.
-//
 
 #ifndef CODE_ARENA_H
 #define CODE_ARENA_H

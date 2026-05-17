@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 14.05.2026.
-//
 
 #include "Inventory.h"
 

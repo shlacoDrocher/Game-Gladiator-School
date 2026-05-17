@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 06.05.2026.
-//
 
 #ifndef CODE_MARKET_H
 #define CODE_MARKET_H

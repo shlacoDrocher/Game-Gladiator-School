@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 14.05.2026.
-//
 
 #ifndef CODE_INVENTORY_H
 #define CODE_INVENTORY_H

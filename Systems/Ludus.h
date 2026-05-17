@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 05.05.2026.
-//
 
 #ifndef CODE_LUDUS_H
 #define CODE_LUDUS_H

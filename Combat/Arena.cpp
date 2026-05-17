@@ -1,12 +1,7 @@
-//
-// Created by Sigma on 09.05.2026.
-//
-
 #include "Arena.h"
 #include "../Factories/GladiatorFactory.h"
 #include <iostream>
 
-// ДОБАВИЛИ Arena::
 bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
     for (int wave = 1; wave <= 2; wave++) {
         auto enemy = GladiatorFactory::CreateRandomGladiator(wave + currentDay);

@@ -1,6 +1,3 @@
-//
-// Created by Sigma on 19.04.2026.
-//
 
 #ifndef CODE_ITEM_H
 #define CODE_ITEM_H

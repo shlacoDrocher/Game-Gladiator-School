@@ -1,6 +1,4 @@
-//
-// Created by New on 02.05.2026.
-//
+
 #include "Gladiator.h"
 
 void Gladiator::Heal(int amount)
