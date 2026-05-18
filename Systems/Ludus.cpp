@@ -1,4 +1,3 @@
-
 #include "Ludus.h"
 #include "../Core/GameManager.h"
 #include <iostream>
@@ -81,25 +80,29 @@ void Ludus::EquipItemMenu() {
     inventory.ShowItems();
 
     std::cout << "Выберите предмет для использования (0 - отмена): ";
-    int itemIdx = GameManager::GetValidInput(0,static_cast<int>(inventory.GetSize()));
+    int itemIdx = GameManager::GetValidInput(0, static_cast<int>(inventory.GetSize()));
+    if (itemIdx == 0) return;
 
-    std::cout << "Выберите бойца (от 1 до " << gladiators.size() << "): ";
-    int gladIdx = GameManager::GetValidInput(1,static_cast<int>(gladiators.size()));
+    std::cout << "Выберите бойца (от 1 до " << gladiators.size() << ") или 0 - отмена: ";
+    int gladIdx = GameManager::GetValidInput(0, static_cast<int>(gladiators.size()));
+    if (gladIdx == 0) return;
 
     Gladiator* g = gladiators[gladIdx - 1].get();
     std::unique_ptr<Item> item = inventory.TakeItem(itemIdx - 1);
 
-    if (dynamic_cast<Weapon*>(item.get()) != nullptr) {
-        g->EquipWeapon(std::unique_ptr<Weapon>(dynamic_cast<Weapon*>(item.release())));
+    if (dynamic_cast<Weapon*>(item.get())) {
+        auto weapon = std::unique_ptr<Weapon>(dynamic_cast<Weapon*>(item.release()));
+        g->EquipWeapon(std::move(weapon));
         std::cout << "Оружие экипировано!" << std::endl;
     }
-    else if (dynamic_cast<Armor*>(item.get()) != nullptr) {
-        g->EquipArmor(std::unique_ptr<Armor>(dynamic_cast<Armor*>(item.release())));
+    else if (dynamic_cast<Armor*>(item.get())) {
+        auto armor = std::unique_ptr<Armor>(dynamic_cast<Armor*>(item.release()));
+        g->EquipArmor(std::move(armor));
         std::cout << "Броня надета!" << std::endl;
     }
-    else if (dynamic_cast<Potion*>(item.get()) != nullptr) {
-        auto potion = dynamic_cast<Potion*>(item.get());
-        g->Heal(potion->GetHealAmount());
+
+    else if (auto* potionPtr = dynamic_cast<Potion*>(item.get())) {
+        g->Heal(potionPtr->GetHealAmount());
         std::cout << "Боец выпил зелье и восстановил здоровье!" << std::endl;
     }
 }

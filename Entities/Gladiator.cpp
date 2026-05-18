@@ -1,4 +1,3 @@
-
 #include "Gladiator.h"
 
 void Gladiator::Heal(int amount)

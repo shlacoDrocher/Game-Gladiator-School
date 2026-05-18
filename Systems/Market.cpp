@@ -2,7 +2,6 @@
 #include "Market.h"
 #include "../Factories/ItemFactory.h"
 #include "../Factories/GladiatorFactory.h"
-
 #include <iostream>
 
 void Market::UpdateAssortment(int currentDay) {

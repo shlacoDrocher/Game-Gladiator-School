@@ -1,4 +1,3 @@
-
 #include "CombatStrategies.h"
 #include <cstdlib>
 #include <iostream>

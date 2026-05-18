@@ -1,4 +1,3 @@
-
 #ifndef CODE_MARKET_H
 #define CODE_MARKET_H
 #include "Ludus.h"
@@ -12,6 +11,5 @@ class Market {
     void BuyItem(int index, Ludus& school);
     void BuyGladiator(int index, Ludus& school);
 };
-
 
 #endif //CODE_MARKET_H

@@ -1,8 +1,6 @@
-
 #ifndef CODE_GLADIATOR_H
 #define CODE_GLADIATOR_H
 #include <memory>
-
 #include "Item.h"
 #include <string>
 
@@ -21,8 +19,6 @@ class Gladiator
     bool isBlocking;
     public:
     Gladiator(std::string name, int hp, int damage, int price) : name(std::move(name)), baseHP(hp), hp(hp), baseDamage(damage), price(price){
-        equiparmon = nullptr;
-        equipwepon = nullptr;
         hasTrainedToday = false;
         hasFoughtToday = false;
         isVulnerable = false;

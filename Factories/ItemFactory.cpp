@@ -1,6 +1,4 @@
-
 #include "../Factories//ItemFactory.h"
-
 #include <vector>
 
 struct WeaponPreset {
