@@ -1,4 +1,3 @@
-
 #include "Market.h"
 #include "../Factories/ItemFactory.h"
 #include "../Factories/GladiatorFactory.h"
@@ -7,8 +6,16 @@
 void Market::UpdateAssortment(int currentDay) {
     dailyItems.clear();
     dailyGladiators.clear();
+
+    WeaponFactory weaponFactory;
+    ArmorFactory armorFactory;
+    PotionFactory potionFactory;
+
+    const ItemFactory* factories[] = { &weaponFactory, &armorFactory, &potionFactory };
+
     for (int index = 0; index < 3; index++) {
-        dailyItems.push_back(ItemFactory::CreateRandomItem());
+        int factoryChoice = rand() % 3;
+        dailyItems.push_back(factories[factoryChoice]->CreateItem());
     }
     for (int i = 0; i < 2; i++) {
         dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator(currentDay));

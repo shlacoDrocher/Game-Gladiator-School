@@ -39,21 +39,20 @@ static const std::vector<HealthPreset> HEALTH_LIST = {
     {"Великое зелье", 60, 100}
 };
 
-std::unique_ptr<Item> ItemFactory::CreateRandomItem() {
-    int category = rand() % 3;
-    if (category == 0) {
-        size_t index = rand() % WEAPON_LIST.size();
-        const auto& preset = WEAPON_LIST[index];
-        return std::make_unique<Weapon>(preset.name, preset.price, preset.damage);
-    }
-    else if (category == 1) {
-        size_t index = rand() % ARMOR_LIST.size();
-        const auto& preset = ARMOR_LIST[index];
-        return std::make_unique<Armor>(preset.name, preset.price, preset.hp);
-    }
-    else {
-        size_t index = rand() % HEALTH_LIST.size();
-        const auto& preset = HEALTH_LIST[index];
-        return std::make_unique<Potion>(preset.name, preset.price, preset.heal);
-    }
+std::unique_ptr<Item> WeaponFactory::CreateItem() const {
+    size_t index = rand() % WEAPON_LIST.size();
+    const auto& preset = WEAPON_LIST[index];
+    return std::make_unique<Weapon>(preset.name, preset.price, preset.damage);
+}
+
+std::unique_ptr<Item> ArmorFactory::CreateItem() const {
+    size_t index = rand() % ARMOR_LIST.size();
+    const auto& preset = ARMOR_LIST[index];
+    return std::make_unique<Armor>(preset.name, preset.price, preset.hp);
+}
+
+std::unique_ptr<Item> PotionFactory::CreateItem() const {
+    size_t index = rand() % HEALTH_LIST.size();
+    const auto& preset = HEALTH_LIST[index];
+    return std::make_unique<Potion>(preset.name, preset.price, preset.heal);
 }

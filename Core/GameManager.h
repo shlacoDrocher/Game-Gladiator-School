@@ -7,7 +7,6 @@
 class GameManager {
     Ludus school;
     Market market;
-
     int currentDay;
     bool hasFoughtToday;
 
