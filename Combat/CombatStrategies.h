@@ -1,4 +1,3 @@
-
 #ifndef CODE_COMBATSTRATEGIES_H
 #define CODE_COMBATSTRATEGIES_H
 #include "../Entities/Gladiator.h"

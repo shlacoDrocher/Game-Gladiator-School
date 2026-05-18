@@ -1,11 +1,9 @@
-
 #ifndef CODE_LUDUS_H
 #define CODE_LUDUS_H
 #include <memory>
 #include "Inventory.h"
 #include "../Entities/Gladiator.h"
 #include <vector>
-
 
 class Ludus {
     int gold = 250;
@@ -40,4 +38,5 @@ class Ludus {
     void RemoveDeadGladiators();
     void EquipItemMenu();
 };
+
 #endif //CODE_LUDUS_H

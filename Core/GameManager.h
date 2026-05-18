@@ -1,4 +1,3 @@
-
 #ifndef CODE_GAMEMANAGER_H
 #define CODE_GAMEMANAGER_H
 #include "../Systems/Ludus.h"
@@ -24,6 +23,5 @@ class GameManager {
     void StartGame();
     static int GetValidInput(int min, int max);
 };
-
 
 #endif //CODE_GAMEMANAGER_H

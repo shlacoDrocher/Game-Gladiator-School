@@ -1,4 +1,3 @@
-
 #ifndef CODE_INVENTORY_H
 #define CODE_INVENTORY_H
 #include <vector>
@@ -16,6 +15,5 @@ public:
     [[nodiscard]] size_t GetSize() const;
     std::unique_ptr<Item> TakeItem(int index);
 };
-
 
 #endif //CODE_INVENTORY_H

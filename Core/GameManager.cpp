@@ -1,5 +1,3 @@
-
-
 #include "GameManager.h"
 #include <iostream>
 #include <cstdlib>
