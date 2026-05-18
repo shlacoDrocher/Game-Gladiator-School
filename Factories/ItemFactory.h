@@ -6,8 +6,24 @@
 #include "../Entities/Item.h"
 
 class ItemFactory {
-    public:
-    static std::unique_ptr<Item> CreateRandomItem();
+public:
+    virtual ~ItemFactory() = default;
+    virtual std::unique_ptr<Item> CreateItem() const = 0;
+};
+
+class WeaponFactory : public ItemFactory {
+public:
+    std::unique_ptr<Item> CreateItem() const override;
+};
+
+class ArmorFactory : public ItemFactory {
+public:
+    std::unique_ptr<Item> CreateItem() const override;
+};
+
+class PotionFactory : public ItemFactory {
+public:
+    std::unique_ptr<Item> CreateItem() const override;
 };
 
 #endif //CODE_ITEMFACTORY_H
