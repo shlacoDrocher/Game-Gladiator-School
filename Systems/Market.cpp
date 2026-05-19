@@ -4,6 +4,7 @@
 #include <iostream>
 
 void Market::UpdateAssortment(int currentDay) {
+    GladiatorFactory gladFactory;
     dailyItems.clear();
     dailyGladiators.clear();
 
@@ -18,7 +19,7 @@ void Market::UpdateAssortment(int currentDay) {
         dailyItems.push_back(factories[factoryChoice]->CreateItem());
     }
     for (int i = 0; i < 2; i++) {
-        dailyGladiators.push_back(GladiatorFactory::CreateRandomGladiator(currentDay));
+        dailyGladiators.push_back(gladFactory.CreateRandomGladiator(currentDay));
     }
 }
 

@@ -42,8 +42,9 @@ bool Arena::ExecuteBattle(Gladiator* player, Gladiator* enemy) {
 }
 
 bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
+    GladiatorFactory gladFactory;
     for (int wave = 1; wave <= 2; wave++) {
-        auto enemy = GladiatorFactory::CreateRandomGladiator(wave + currentDay);
+        auto enemy = gladFactory.CreateRandomGladiator(wave + currentDay);
         std::cout << "\n=== ВОЛНА " << wave << " === Ваш противник: " << enemy->GetName() << "!" << std::endl;
 
         bool survived = ExecuteBattle(playerGladiator, enemy.get());
