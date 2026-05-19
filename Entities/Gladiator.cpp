@@ -1,9 +1,9 @@
 #include "Gladiator.h"
+#include <algorithm>
 
 void Gladiator::Heal(int amount)
 {
-    hp = hp + amount;
-    if (hp > GetMaxHp()) {hp = GetMaxHp();}
+    hp = std::min(hp + amount, GetMaxHp());
 }
 
 void Gladiator::TakeDamage(int damage)
@@ -16,7 +16,5 @@ void Gladiator::TakeDamage(int damage)
         finalDamage = finalDamage * 1.5f;
     }
 
-    hp = hp - static_cast<int>(finalDamage);
-
-    if (hp < 0) {hp = 0;}
+    hp = std::max(hp - static_cast<int>(finalDamage), 0);
 }

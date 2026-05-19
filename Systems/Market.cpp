@@ -28,9 +28,9 @@ void Market::ShowAssortment() const {
         std::cout << "[Предмет " << i + 1 << "] " << dailyItems[i]->GetStats() << std::endl;
     }
 
-    std::cout << "\n РАБЫ НА ПРОДАЖУ " << std::endl;
+    std::cout << "\n БОЙЦЫ НА ПРОДАЖУ " << std::endl;
     for (size_t i = 0; i < dailyGladiators.size(); i++) {
-        std::cout << "[Раб " << i + 1 << "] "
+        std::cout << "[Боец " << i + 1 << "] "
                   << dailyGladiators[i]->GetName()
                   << " | ХП: " << dailyGladiators[i]->GetMaxHp()
                   << " | Урон: " << dailyGladiators[i]->GetTotalDamage()
@@ -76,6 +76,6 @@ void Market::BuyGladiator(int index, Ludus &school) {
             std::cout << "Недостаточно золота!" << std::endl;
         }
     } else {
-        std::cout << "Неверный номер раба!" << std::endl;
+        std::cout << "Неверный номер бойца!" << std::endl;
     }
 }

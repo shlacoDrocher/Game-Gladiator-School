@@ -33,7 +33,7 @@ void GameManager::StartGame() {
 void GameManager::ShowMainMenu() {
     std::cout << "\n ДЕНЬ " << currentDay << " | ЗОЛОТО: " << school.getGold() << " | РЕПУТАЦИЯ: " << school.getReputation() << " ===" << std::endl;
     std::cout << "1. Управление школой (Тренировки и Улучшения)" << std::endl;
-    std::cout << "2. Рынок (Магазин и Рабы)" << std::endl;
+    std::cout << "2. Рынок (Магазин и Бойцы)" << std::endl;
     std::cout << "3. Арена (Бои)" << std::endl;
     std::cout << "4. Закончить день" << std::endl;
     std::cout << "0. Выйти из игры" << std::endl;
@@ -53,7 +53,7 @@ void GameManager::HandleMarketMenu() {
     std::cout << "\nВАШИ ДЕНЬГИ: " << school.getGold() << std::endl;
     market.ShowAssortment();
 
-    std::cout << "\nЧто хотите купить?\n1. Предмет\n2. Раба\n0. Назад\nВыбор: ";
+    std::cout << "\nЧто хотите купить?\n1. Предмет\n2. Бойца\n0. Назад\nВыбор: ";
     int marketChoice = GetValidInput(0, 2);
 
     if (marketChoice == 1) {
@@ -62,7 +62,7 @@ void GameManager::HandleMarketMenu() {
         if (itemIndex > 0) market.BuyItem(itemIndex - 1, school);
     }
     else if (marketChoice == 2) {
-        std::cout << "Введите номер раба или 0 для отмены: ";
+        std::cout << "Введите номер бойца или 0 для отмены: ";
         int slaveIndex = GetValidInput(0, 3);
         if (slaveIndex > 0) market.BuyGladiator(slaveIndex - 1, school);
     }
@@ -70,7 +70,7 @@ void GameManager::HandleMarketMenu() {
 
 void GameManager::HandleArenaMenu() {
     if (school.GetGladiatorCount() == 0) {
-        std::cout << "\nУ вас нет гладиаторов! Сначала купите раба на Рынке." << std::endl;
+        std::cout << "\nУ вас нет гладиаторов! Сначала купите бойца на Рынке." << std::endl;
         return;
     }
 
@@ -119,7 +119,7 @@ void GameManager::HandleArenaMenu() {
 void GameManager::HandleSchoolMenu() {
     std::cout << "\n ШКОЛА ГЛАДИАТОРОВ " << std::endl;
     if (school.GetGladiatorCount() == 0) {
-        std::cout << "\nУ вас нет гладиаторов! Сначала купите раба на Рынке." << std::endl;
+        std::cout << "\nУ вас нет гладиаторов! Сначала купите бойца на Рынке." << std::endl;
         return;
     }
 
