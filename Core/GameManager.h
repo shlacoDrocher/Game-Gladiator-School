@@ -7,6 +7,7 @@
 class GameManager {
     Ludus school;
     Market market;
+    Arena arena;
     int currentDay;
     bool hasFoughtToday;
 
@@ -16,7 +17,7 @@ class GameManager {
     void HandleSchoolMenu();
     void RandomEvent();
     void EndDay();
-    static void ExitGame();
+    void ExitGame();
     public:
     GameManager();
     void StartGame();

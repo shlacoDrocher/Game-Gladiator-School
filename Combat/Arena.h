@@ -4,11 +4,11 @@
 #include "../Entities/Gladiator.h"
 
 class Arena {
-    static bool ExecuteBattle(Gladiator* player, Gladiator* enemy);
-    static std::unique_ptr<ICombatStrategy> CreateStrategy(int choice);
+    bool ExecuteBattle(Gladiator* player, Gladiator* enemy);
+    std::unique_ptr<ICombatStrategy> CreateStrategy(int choice);
 public:
-    static bool StartTournament(Gladiator* playerGladiator, int currentDay);
-    static bool FightBoss(Gladiator* playerGladiator, Gladiator* boss);
+    bool StartTournament(Gladiator* playerGladiator, int currentDay);
+    bool FightBoss(Gladiator* playerGladiator, Gladiator* boss);
 };
 
 #endif //CODE_ARENA_H
