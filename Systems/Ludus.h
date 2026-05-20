@@ -6,7 +6,7 @@
 #include <vector>
 
 class Ludus {
-    int gold = 250;
+    int gold = 200;
     int reputation = 0;
     int dummyLevel = 1;
     int infirmaryLevel = 1;
@@ -37,6 +37,8 @@ class Ludus {
     }
     void RemoveDeadGladiators();
     void EquipItemMenu();
+    [[nodiscard]] int GetDummyUpgradeCost() const { return dummyLevel * 50; }
+    [[nodiscard]] int GetInfirmaryUpgradeCost() const { return infirmaryLevel * 50; }
 };
 
 #endif //CODE_LUDUS_H
