@@ -49,7 +49,7 @@
 ### Ручная сборка (g++)
 Если вы хотите собрать игру через терминал (при условии, что все `.cpp` файлы лежат в своих папках):
 ```bash
-g++ -std=c++17 main.cpp Core/*.cpp Combat/*.cpp Entities/*.cpp Factories/*.cpp Systems/*.cpp -o GladiatorGame
+g++ -std=c++17 Core/*.cpp Combat/*.cpp Entities/*.cpp Factories/*.cpp Systems/*.cpp -o GladiatorGame
 ./GladiatorGame
 ```
 
