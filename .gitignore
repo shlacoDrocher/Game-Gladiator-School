@@ -1,0 +1,16 @@
+# Скомпилированные исполняемые файлы
+*.exe
+*.out
+*.app
+GladiatorGame
+
+# Папки сборки CMake
+cmake-build-*/
+build/
+out/
+
+# Настройки самой IDE CLion
+.idea/
+
+# Системные файлы
+.DS_Store
