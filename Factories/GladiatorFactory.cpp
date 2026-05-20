@@ -1,10 +1,12 @@
 #include "../Factories/GladiatorFactory.h"
 #include <vector>
 
-static const std::vector<std::string> NAMES_LIST = {
-    "Безымянный раб", "Суровый Галл", "Ловкий Фракиец",
-    "Пленный варвар", "Хилый воришка", "Могучий германец"
-};
+namespace {
+    const std::vector<std::string> NAMES_LIST = {
+        "Безымянный раб", "Суровый Галл", "Ловкий Фракиец",
+        "Пленный варвар", "Хилый воришка", "Могучий германец"
+    };
+}
 
 std::unique_ptr<Gladiator> GladiatorFactory::CreateRandomGladiator(int level) {
     size_t index = rand() % NAMES_LIST.size();
