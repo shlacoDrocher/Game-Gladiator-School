@@ -55,6 +55,10 @@ class Gladiator
     [[nodiscard]] bool HasTrainedToday() const { return hasTrainedToday; }
     void SetTrainedToday(bool val) { hasTrainedToday = val; }
     void AddBaseDamage(int amount) { baseDamage += amount; }
+    void AddBaseHp(int amount) {
+        baseHP += amount;
+        hp += amount;
+    }
 };
 
 #endif //CODE_GLADIATOR_H

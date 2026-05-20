@@ -20,29 +20,32 @@ void Ludus::ShowRoster() const {
 
 void Ludus::NightHeal() const {
     for (auto & gladiator : gladiators) {
-        gladiator -> Heal(infirmaryLevel *10);
+        gladiator -> Heal(infirmaryLevel *15);
+        gladiator->SetTrainedToday(false);
     }
 }
 
 void Ludus::UpgradeDummy() {
-    if (gold >= 50) {
-        gold -= 50;
+    int cost = GetDummyUpgradeCost();
+    if (gold >= cost) {
+        gold -= cost;
         dummyLevel++;
-        std::cout << "Манекен улучшено!" << std::endl;
+        std::cout << "Манекен улучшен до уровня " << dummyLevel << "!" << std::endl;
     }
     else {
-        std::cout << "Не хватает золота!" << std::endl;
+        std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
     }
 }
 
 void Ludus::UpgradeInfirmary() {
-    if (gold >= 50) {
-        gold -= 50;
+    int cost = GetInfirmaryUpgradeCost();
+    if (gold >= cost) {
+        gold -= cost;
         infirmaryLevel++;
-        std::cout << "Лазарет улучшен!" << std::endl;
+        std::cout << "Лазарет улучшен до уровня " << infirmaryLevel << "!" << std::endl;
     }
     else {
-        std::cout << "Не хватает золота!" << std::endl;
+        std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
     }
 }
 
@@ -51,8 +54,10 @@ void Ludus::TrainGladiator(int index) const {
         auto& g = gladiators[index];
         if (g -> HasTrainedToday() == false) {
             g -> AddBaseDamage(dummyLevel * 2);
+            g->AddBaseHp(dummyLevel * 5);
             g->SetTrainedToday(true);
-            std::cout << "Гладиатор был усилен!" << std::endl;
+            std::cout << "Гладиатор был усилен! (Урон +" << (dummyLevel * 2)
+                      << ", ХП +" << (dummyLevel * 5) << ")" << std::endl;
         } else {
             std::cout << "Этот боец слишком устал сегодня." << std::endl;
         }

@@ -126,8 +126,8 @@ void GameManager::HandleSchoolMenu() {
     school.ShowRoster();
     std::cout << "\nДействия в школе:" << std::endl;
     std::cout << "1. Тренировать бойца" << std::endl;
-    std::cout << "2. Улучшить Тренировочный Манекен (50 золота)" << std::endl;
-    std::cout << "3. Улучшить Лазарет (50 золота)" << std::endl;
+    std::cout << "2. Улучшить Тренировочный Манекен (" << school.GetDummyUpgradeCost() << " золота)" << std::endl;
+    std::cout << "3. Улучшить Лазарет (" << school.GetInfirmaryUpgradeCost() << " золота)" << std::endl;
     std::cout << "4. Использовать/Надеть предмет со склада" << std::endl;
     std::cout << "0. Назад в Главное Меню" << std::endl;
     std::cout << "Выбор: ";
