@@ -13,6 +13,8 @@ std::unique_ptr<Gladiator> GladiatorFactory::CreateRandomGladiator(int level) {
     std::string name = NAMES_LIST[index];
     int randomHP = rand() % 20 + 30 + (level * 2);
     int ramdomDamage = rand() % 4 + 3 + (level * 1);
-    int finalPrice = randomHP + (ramdomDamage * 2);
+    int basePrice = randomHP + (ramdomDamage * 2);
+    int finalPrice = static_cast<int>(basePrice * (1.0 + level * 0.1));
+
     return std::make_unique<Gladiator>(name, randomHP, ramdomDamage, finalPrice);
 }
