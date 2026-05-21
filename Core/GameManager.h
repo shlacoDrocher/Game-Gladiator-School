@@ -3,8 +3,12 @@
 #include "../Systems/Ludus.h"
 #include "../Systems/Market.h"
 #include "../Combat/Arena.h"
+#include "../Entities/Boss.h"
 
 class GameManager {
+public:
+    static const int MAX_DAYS = 30;
+private:
     Ludus school;
     Market market;
     Arena arena;
@@ -18,7 +22,7 @@ class GameManager {
     void RandomEvent();
     void EndDay();
     void ExitGame();
-    public:
+public:
     GameManager();
     void StartGame();
     static int GetValidInput(int min, int max);

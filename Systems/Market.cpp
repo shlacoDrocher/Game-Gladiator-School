@@ -39,44 +39,44 @@ void Market::ShowAssortment() const {
     }
 }
 
-void Market::BuyItem(int index, Ludus &school) {
+TransactionResult Market::BuyItem(int index, Ludus &school) {
+    // По умолчанию ставим статус ошибки ввода
+    TransactionResult result = TransactionResult::INVALID_INDEX;
+
     if (index >= 0 && index < dailyItems.size()) {
         int price = dailyItems[index]->GetPrice();
 
-        if (school.getGold() >= price) {
-            school.SpendGold(price);
+        if (school.SpendGold(price)) {
             school.AddItemInventory(std::move(dailyItems[index]));
             dailyItems.erase(dailyItems.begin() + index);
-
-            std::cout << "Предмет успешно куплен и добавлен в инвентарь школы!" << std::endl;
+            result = TransactionResult::SUCCESS;
+        } else {
+            result = TransactionResult::INSUFFICIENT_FUNDS;
         }
-        else {
-            std::cout << "Недостаточно золота!" << std::endl;
-        }
-    } else {
-        std::cout << "Неверный номер предмета!" << std::endl;
     }
+
+    return result;
 }
 
-void Market::BuyGladiator(int index, Ludus &school) {
+TransactionResult Market::BuyGladiator(int index, Ludus &school) {
+    TransactionResult result = TransactionResult::INVALID_INDEX;
+
     if (index >= 0 && index < dailyGladiators.size()) {
         int price = dailyGladiators[index]->GetPrice();
 
         if (school.getGold() >= price) {
-            school.SpendGold(price);
-
-            if (school.AddGladiator(std::move(dailyGladiators[index]))) {
+            if (school.GetGladiatorCount() < Ludus::MAX_GLADIATORS) {
+                school.SpendGold(price);
+                school.AddGladiator(std::move(dailyGladiators[index]));
                 dailyGladiators.erase(dailyGladiators.begin() + index);
-                std::cout << "Гладиатор куплен и отправлен в Школу!" << std::endl;
+                result = TransactionResult::SUCCESS;
             } else {
-                school.SpendGold(-price);
-                std::cout << "Школа переполнена! Максимум 5 гладиаторов." << std::endl;
+                result = TransactionResult::LUDUS_FULL;
             }
+        } else {
+            result = TransactionResult::INSUFFICIENT_FUNDS;
         }
-        else {
-            std::cout << "Недостаточно золота!" << std::endl;
-        }
-    } else {
-        std::cout << "Неверный номер бойца!" << std::endl;
     }
+
+    return result;
 }

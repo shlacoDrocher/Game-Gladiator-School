@@ -1,45 +1,7 @@
 #include "Arena.h"
 #include "../Factories/GladiatorFactory.h"
-#include "../Core/GameManager.h"
 #include <iostream>
-
-std::unique_ptr<ICombatStrategy> Arena::CreateStrategy(int choice) {
-    if (choice == 1) return std::make_unique<AccurateAttack>();
-    if (choice == 2) return std::make_unique<RecklessAttack>();
-    return std::make_unique<DefensiveStance>();
-}
-
-bool Arena::ExecuteBattle(Gladiator* player, Gladiator* enemy) {
-    while (player->GetHp() > 0 && enemy->GetHp() > 0) {
-        player->SetBlocking(false);
-        player->SetVulnerable(false);
-
-        std::cout << "\n[ВЫ] ХП: " << player->GetHp() << " |[ВРАГ] ХП: " << enemy->GetHp() << std::endl;
-        std::cout << "Выберите действие:\n1. Точная атака\n2. Безрассудный удар\n3. Глухая защита" << std::endl;
-
-        int choice = GameManager::GetValidInput(1, 3);
-        auto activeStrategy = CreateStrategy(choice);
-        activeStrategy->Execute(player, enemy);
-
-        if (enemy->GetHp() <= 0) {
-            std::cout << "\nВраг повержен!" << std::endl;
-            break;
-        }
-
-        enemy->SetBlocking(false);
-        enemy->SetVulnerable(false);
-
-        int aiRoll = rand() % 100;
-        int enemyChoice = (aiRoll < 50) ? 1 : ((aiRoll < 80) ? 2 : 3);
-
-        auto enemyStrategy = CreateStrategy(enemyChoice);
-
-        std::cout << "\n--- Ход противника ---" << std::endl;
-        enemyStrategy->Execute(enemy, player);
-    }
-
-    return player->GetHp() > 0;
-}
+#include "Battle.h"
 
 bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
     GladiatorFactory gladFactory;
@@ -47,7 +9,8 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
         auto enemy = gladFactory.CreateRandomGladiator(wave + currentDay);
         std::cout << "\n=== ВОЛНА " << wave << " === Ваш противник: " << enemy->GetName() << "!" << std::endl;
 
-        bool survived = ExecuteBattle(playerGladiator, enemy.get());
+        Battle currentBattle(playerGladiator, enemy.get());
+        bool survived = currentBattle.Start();
 
         if (!survived) {
             std::cout << "\nВаш гладиатор пал на арене..." << std::endl;
@@ -66,9 +29,10 @@ bool Arena::StartTournament(Gladiator* playerGladiator, int currentDay) {
 }
 
 bool Arena::FightBoss(Gladiator *playerGladiator, Gladiator* boss) {
-    std::cout << "\nБИТВА НАЧИНАЕТСЯ!" << std::endl;
+    std::cout << "\nГРАНД-ФИНАЛ НАЧИНАЕТСЯ!" << std::endl;
 
-    bool survived = ExecuteBattle(playerGladiator, boss);
+    Battle finalBattle(playerGladiator, boss);
+    bool survived = finalBattle.Start();
 
     if (!survived) {
         std::cout << "\nВаш гладиатор пал на арене..." << std::endl;

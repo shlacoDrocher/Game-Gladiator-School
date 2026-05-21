@@ -24,6 +24,7 @@ class Gladiator
         isVulnerable = false;
         isBlocking = false;
     }
+    virtual ~Gladiator() = default;
     std::string GetName() { return name; }
     [[nodiscard]] int GetPrice() const { return price; }
     [[nodiscard]] int GetHp() const { return hp; }
@@ -49,7 +50,7 @@ class Gladiator
     }
 
     void Heal(int amount);
-    void TakeDamage(int damage);
+    virtual void TakeDamage(int damage);
     void SetVulnerable(bool val) { isVulnerable = val;}
     void SetBlocking(bool val) { isBlocking = val;}
     [[nodiscard]] bool HasTrainedToday() const { return hasTrainedToday; }
@@ -59,6 +60,7 @@ class Gladiator
         baseHP += amount;
         hp += amount;
     }
+    void ReceiveItem(std::unique_ptr<Item> item);
 };
 
 #endif //CODE_GLADIATOR_H
