@@ -22,9 +22,10 @@ int GameManager::GetValidInput(int min, int max) {
 
 void GameManager::StartGame() {
     std::cout << "Добро пожаловать в Симулятор Школы Гладиаторов!" << std::endl;
-    std::cout << "У вас есть ровно 30 дней, чтобы подготовить Чемпиона. "
+    std::cout << "У вас есть ровно " << MAX_DAYS << " дней, чтобы подготовить Чемпиона. "
                  "И доказать что вы самая лучшая школа" << std::endl;
-    while (currentDay <= 30) {
+
+    while (currentDay <= MAX_DAYS) { // Заменили 30
         ShowMainMenu();
     }
     std::cout << "Игра окончена!" << std::endl;
@@ -59,12 +60,34 @@ void GameManager::HandleMarketMenu() {
     if (marketChoice == 1) {
         std::cout << "Введите номер предмета или 0 для отмены: ";
         int itemIndex = GetValidInput(0, 3);
-        if (itemIndex > 0) market.BuyItem(itemIndex - 1, school);
+        if (itemIndex > 0) {
+            TransactionResult res = market.BuyItem(itemIndex - 1, school);
+
+            if (res == TransactionResult::SUCCESS) {
+                std::cout << "Предмет успешно куплен и добавлен в инвентарь школы!" << std::endl;
+            } else if (res == TransactionResult::INSUFFICIENT_FUNDS) {
+                std::cout << "Недостаточно золота!" << std::endl;
+            } else {
+                std::cout << "Неверный номер предмета!" << std::endl;
+            }
+        }
     }
     else if (marketChoice == 2) {
         std::cout << "Введите номер бойца или 0 для отмены: ";
         int slaveIndex = GetValidInput(0, 3);
-        if (slaveIndex > 0) market.BuyGladiator(slaveIndex - 1, school);
+        if (slaveIndex > 0) {
+            TransactionResult res = market.BuyGladiator(slaveIndex - 1, school);
+
+            if (res == TransactionResult::SUCCESS) {
+                std::cout << "Гладиатор куплен и отправлен в Школу!" << std::endl;
+            } else if (res == TransactionResult::INSUFFICIENT_FUNDS) {
+                std::cout << "Недостаточно золота!" << std::endl;
+            } else if (res == TransactionResult::LUDUS_FULL) {
+                std::cout << "Школа переполнена! Максимум " << Ludus::MAX_GLADIATORS << " бойцов." << std::endl;
+            } else {
+                std::cout << "Неверный номер бойца!" << std::endl;
+            }
+        }
     }
 }
 
@@ -89,7 +112,7 @@ void GameManager::HandleArenaMenu() {
 
     bool isVictorious = false;
 
-    if (currentDay == 30) {
+    if (currentDay == MAX_DAYS) {
         std::cout << "\n!!! ГРАНД-ФИНАЛ !!! ИМПЕРАТОР СМОТРИТ НА ВАС !!!" << std::endl;
         std::cout << "Ваш противник - Чемпион Рима!" << std::endl;
 
@@ -136,11 +159,21 @@ void GameManager::HandleSchoolMenu() {
     if (schoolChoice == 1) {
         std::cout << "Введите номер бойца для тренировки: ";
         int trainIndex = GetValidInput(0, school.GetGladiatorCount());
-        school.TrainGladiator(trainIndex - 1);
+        TrainingResult res = school.TrainGladiator(trainIndex - 1);
+
+        if (res == TrainingResult::SUCCESS) {
+            std::cout << "Гладиатор был успешно усилен!" << std::endl;
+        } else if (res == TrainingResult::ALREADY_TRAINED) {
+            std::cout << "Этот боец слишком устал сегодня." << std::endl;
+        } else {
+            std::cout << "Неверный номер гладиатора!" << std::endl;
+        }
     } else if (schoolChoice == 2) {
-        school.UpgradeDummy();
+        if (school.UpgradeDummy()) std::cout << "Манекен успешно улучшен!" << std::endl;
+        else std::cout << "Не хватает золота для улучшения!" << std::endl;
     } else if (schoolChoice == 3) {
-        school.UpgradeInfirmary();
+        if (school.UpgradeInfirmary()) std::cout << "Лазарет успешно улучшен!" << std::endl;
+        else std::cout << "Не хватает золота для улучшения!" << std::endl;
     } else if (schoolChoice == 4) {
         school.EquipItemMenu();
     }
