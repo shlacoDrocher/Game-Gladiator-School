@@ -42,7 +42,7 @@ bool Battle::Start() {
         std::cout << "\n--- Ход противника ---" << std::endl;
         enemyStrategy->Execute(enemy, player);
 
-        roundCount++; // Увеличиваем раунд
+        roundCount++;
     }
 
     return player->GetHp() > 0;

@@ -60,6 +60,7 @@ class Gladiator
         baseHP += amount;
         hp += amount;
     }
+    void ReceiveItem(std::unique_ptr<Item> item);
 };
 
 #endif //CODE_GLADIATOR_H

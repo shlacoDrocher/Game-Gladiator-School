@@ -3,7 +3,7 @@
 #include <iostream>
 
 bool Ludus::AddGladiator(std::unique_ptr<Gladiator> g) {
-    if (gladiators.size() < 5 ) {
+    if (gladiators.size() < MAX_GLADIATORS) {
         gladiators.push_back(std::move(g));
         return true;
     }
@@ -20,55 +20,45 @@ void Ludus::ShowRoster() const {
 
 void Ludus::NightHeal() const {
     for (auto & gladiator : gladiators) {
-        // Лечим через запрос к объекту infirmary
         gladiator->Heal(infirmary.GetHealAmount());
         gladiator->SetTrainedToday(false);
     }
 }
 
-void Ludus::UpgradeDummy() {
+bool Ludus::UpgradeDummy() {
     int cost = dummy.GetUpgradeCost();
-    if (gold >= cost) {
-        gold -= cost;
+    if (treasury.SpendFunds(cost)) {
         dummy.Upgrade();
-        std::cout << "Манекен улучшен до уровня " << dummy.GetLevel() << "!" << std::endl;
+        return true;
     }
-    else {
-        std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
-    }
+    return false;
 }
 
-void Ludus::UpgradeInfirmary() {
+bool Ludus::UpgradeInfirmary() {
     int cost = infirmary.GetUpgradeCost();
-    if (gold >= cost) {
-        gold -= cost;
+    if (treasury.SpendFunds(cost)) {
         infirmary.Upgrade();
-        std::cout << "Лазарет улучшен до уровня " << infirmary.GetLevel() << "!" << std::endl;
+        return true;
     }
-    else {
-        std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
-    }
+    return false;
 }
 
-void Ludus::TrainGladiator(int index) {
+TrainingResult Ludus::TrainGladiator(int index) {
+    TrainingResult result = TrainingResult::INVALID_INDEX;
+
     if (index >= 0 && index < gladiators.size()) {
         auto& g = gladiators[index];
         if (!g->HasTrainedToday()) {
-            // Забираем бонусы из объекта dummy
-            int dmgBonus = dummy.GetDamageBonus();
-            int hpBonus = dummy.GetHpBonus();
-
-            g->AddBaseDamage(dmgBonus);
-            g->AddBaseHp(hpBonus);
+            g->AddBaseDamage(dummy.GetDamageBonus());
+            g->AddBaseHp(dummy.GetHpBonus());
             g->SetTrainedToday(true);
-            std::cout << "Гладиатор был усилен! (Урон +" << dmgBonus
-                      << ", ХП +" << hpBonus << ")" << std::endl;
+            result = TrainingResult::SUCCESS;
         } else {
-            std::cout << "Этот боец слишком устал сегодня." << std::endl;
+            result = TrainingResult::ALREADY_TRAINED;
         }
-    } else {
-        std::cout << "Неверный номер гладиатора!" << std::endl;
     }
+
+    return result;
 }
 
 void Ludus::RemoveDeadGladiators() {
@@ -100,19 +90,5 @@ void Ludus::EquipItemMenu() {
     Gladiator* g = gladiators[gladIdx - 1].get();
     std::unique_ptr<Item> item = inventory.TakeItem(itemIdx - 1);
 
-    if (dynamic_cast<Weapon*>(item.get())) {
-        auto weapon = std::unique_ptr<Weapon>(dynamic_cast<Weapon*>(item.release()));
-        g->EquipWeapon(std::move(weapon));
-        std::cout << "Оружие экипировано!" << std::endl;
-    }
-    else if (dynamic_cast<Armor*>(item.get())) {
-        auto armor = std::unique_ptr<Armor>(dynamic_cast<Armor*>(item.release()));
-        g->EquipArmor(std::move(armor));
-        std::cout << "Броня надета!" << std::endl;
-    }
-
-    else if (auto* potionPtr = dynamic_cast<Potion*>(item.get())) {
-        g->Heal(potionPtr->GetHealAmount());
-        std::cout << "Боец выпил зелье и восстановил здоровье!" << std::endl;
-    }
+    g->ReceiveItem(std::move(item));
 }
