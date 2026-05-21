@@ -4,12 +4,13 @@
 #include "Inventory.h"
 #include "../Entities/Gladiator.h"
 #include <vector>
+#include "Buildings.h"
 
 class Ludus {
     int gold = 200;
     int reputation = 0;
-    int dummyLevel = 1;
-    int infirmaryLevel = 1;
+    TrainingDummy dummy;
+    Infirmary infirmary;
     std::vector<std::unique_ptr<Gladiator>> gladiators;
     Inventory inventory;
     public:
@@ -20,7 +21,7 @@ class Ludus {
     void AddItemInventory(std::unique_ptr<Item> item) { inventory.AddItem(std::move(item)); }
     bool AddGladiator(std::unique_ptr<Gladiator> g);
     void ShowRoster() const;
-    void TrainGladiator(int index) const;
+    void TrainGladiator(int index);
     void UpgradeDummy();
     void UpgradeInfirmary();
     void NightHeal() const;
@@ -37,8 +38,8 @@ class Ludus {
     }
     void RemoveDeadGladiators();
     void EquipItemMenu();
-    [[nodiscard]] int GetDummyUpgradeCost() const { return dummyLevel * 50; }
-    [[nodiscard]] int GetInfirmaryUpgradeCost() const { return infirmaryLevel * 50; }
+    [[nodiscard]] int GetDummyUpgradeCost() const { return dummy.GetUpgradeCost(); }
+    [[nodiscard]] int GetInfirmaryUpgradeCost() const { return infirmary.GetUpgradeCost(); }
 };
 
 #endif //CODE_LUDUS_H

@@ -20,17 +20,18 @@ void Ludus::ShowRoster() const {
 
 void Ludus::NightHeal() const {
     for (auto & gladiator : gladiators) {
-        gladiator -> Heal(infirmaryLevel *15);
+        // Лечим через запрос к объекту infirmary
+        gladiator->Heal(infirmary.GetHealAmount());
         gladiator->SetTrainedToday(false);
     }
 }
 
 void Ludus::UpgradeDummy() {
-    int cost = GetDummyUpgradeCost();
+    int cost = dummy.GetUpgradeCost();
     if (gold >= cost) {
         gold -= cost;
-        dummyLevel++;
-        std::cout << "Манекен улучшен до уровня " << dummyLevel << "!" << std::endl;
+        dummy.Upgrade();
+        std::cout << "Манекен улучшен до уровня " << dummy.GetLevel() << "!" << std::endl;
     }
     else {
         std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
@@ -38,26 +39,30 @@ void Ludus::UpgradeDummy() {
 }
 
 void Ludus::UpgradeInfirmary() {
-    int cost = GetInfirmaryUpgradeCost();
+    int cost = infirmary.GetUpgradeCost();
     if (gold >= cost) {
         gold -= cost;
-        infirmaryLevel++;
-        std::cout << "Лазарет улучшен до уровня " << infirmaryLevel << "!" << std::endl;
+        infirmary.Upgrade();
+        std::cout << "Лазарет улучшен до уровня " << infirmary.GetLevel() << "!" << std::endl;
     }
     else {
         std::cout << "Не хватает золота! Нужно: " << cost << std::endl;
     }
 }
 
-void Ludus::TrainGladiator(int index) const {
-    if (index >=0 && index < gladiators.size()) {
+void Ludus::TrainGladiator(int index) {
+    if (index >= 0 && index < gladiators.size()) {
         auto& g = gladiators[index];
-        if (g -> HasTrainedToday() == false) {
-            g -> AddBaseDamage(dummyLevel * 2);
-            g->AddBaseHp(dummyLevel * 5);
+        if (!g->HasTrainedToday()) {
+            // Забираем бонусы из объекта dummy
+            int dmgBonus = dummy.GetDamageBonus();
+            int hpBonus = dummy.GetHpBonus();
+
+            g->AddBaseDamage(dmgBonus);
+            g->AddBaseHp(hpBonus);
             g->SetTrainedToday(true);
-            std::cout << "Гладиатор был усилен! (Урон +" << (dummyLevel * 2)
-                      << ", ХП +" << (dummyLevel * 5) << ")" << std::endl;
+            std::cout << "Гладиатор был усилен! (Урон +" << dmgBonus
+                      << ", ХП +" << hpBonus << ")" << std::endl;
         } else {
             std::cout << "Этот боец слишком устал сегодня." << std::endl;
         }

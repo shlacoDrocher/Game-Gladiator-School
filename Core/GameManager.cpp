@@ -93,7 +93,7 @@ void GameManager::HandleArenaMenu() {
         std::cout << "\n!!! ГРАНД-ФИНАЛ !!! ИМПЕРАТОР СМОТРИТ НА ВАС !!!" << std::endl;
         std::cout << "Ваш противник - Чемпион Рима!" << std::endl;
 
-        auto boss = std::make_unique<Gladiator>("ЧЕМПИОН РИМА", 300, 35, 0);
+        auto boss = std::make_unique<Boss>("ЧЕМПИОН РИМА", 300, 35, 0);
         isVictorious = arena.FightBoss(fighter, boss.get());
 
         if (isVictorious) {

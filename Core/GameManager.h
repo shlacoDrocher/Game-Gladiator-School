@@ -3,6 +3,7 @@
 #include "../Systems/Ludus.h"
 #include "../Systems/Market.h"
 #include "../Combat/Arena.h"
+#include "../Entities/Boss.h"
 
 class GameManager {
     Ludus school;
